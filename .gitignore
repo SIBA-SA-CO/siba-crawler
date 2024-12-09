@@ -1,0 +1,12 @@
+# Ignorar entornos virtuales
+venv/
+
+# Ignorar logs y datos temporales
+logs/*.log
+data/npo/*.txt
+data/bvn/*.txt
+
+
+# Ignorar dependencias instaladas
+__pycache__/
+*.pyc
