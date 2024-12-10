@@ -5,6 +5,7 @@ venv/
 logs/*.log
 data/npo/*.txt
 data/bvn/*.txt
+data/metv/*.txt
 
 
 # Ignorar dependencias instaladas

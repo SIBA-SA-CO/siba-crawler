@@ -145,3 +145,18 @@ class BaseScraper:
 
         except Exception as e:
             logging.error(f"Error al guardar los datos en el archivo {full_file_path}: {e}")
+
+
+    def get_text_if_exists(self, locator, selector, timeout=500):
+        """
+        Verifica si un elemento existe y devuelve su texto. Si no existe, devuelve "No disponible".
+        """
+        try:
+            # Localiza el elemento dentro del timeout
+            element = locator.locator(selector).first
+            if element.count() > 0:
+                return element.text_content(timeout=timeout).strip()
+            else:
+                return "n/a"
+        except TimeoutError:
+            return "No disponible"
