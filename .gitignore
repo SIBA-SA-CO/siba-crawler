@@ -9,6 +9,7 @@ logs/*.log
 data/npo/*.txt
 data/bvn/*.txt
 data/metv/*.txt
+data/bet/*.txt
 
 
 # Ignorar dependencias instaladas

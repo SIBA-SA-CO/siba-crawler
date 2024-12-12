@@ -2,7 +2,6 @@ import logging
 import requests
 from .base_scraper import BaseScraper
 from datetime import datetime, timedelta
-import pandas as pd
 
 class NpoClient(BaseScraper):
     def __init__(self, base_url):
@@ -42,8 +41,10 @@ class NpoClient(BaseScraper):
                 program_start = program_start // 1000 if program_start > 10**10 else program_start
                 original_date = datetime.fromtimestamp(program_start)
 
-                date = original_date.strftime("%Y-%m-%d")
-                time = original_date.strftime("%H:%M")
+                fecha_modificada = original_date + timedelta(hours=6)
+
+                date = fecha_modificada.strftime("%Y-%m-%d")
+                time = fecha_modificada.strftime("%H:%M")
 
                 processed_data.append({
                     "date": date,
