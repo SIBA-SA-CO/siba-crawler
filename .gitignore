@@ -1,5 +1,8 @@
+#Ignora configuración local docker
+docker-compose.yml
 # Ignorar entornos virtuales
 venv/
+.venv/
 
 # Ignorar logs y datos temporales
 logs/*.log

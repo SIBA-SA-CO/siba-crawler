@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  siba-crawler:
+    image: maomuriel/ubuntu_24.04_apache2.4_python3.13:0.1.1
+    container_name: "siba-crawler"
+    stdin_open: false # docker run -i
+    tty: false # docker run -t
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "/path/to/siba-crawler:/var/www/app"
+    networks:
+      - "siba"
+networks:
+  siba:
+    external: true
+    driver: bridge
