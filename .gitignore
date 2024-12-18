@@ -10,6 +10,7 @@ data/npo/*.txt
 data/bvn/*.txt
 data/metv/*.txt
 data/bet/*.txt
+data/my9/*.txt
 
 
 # Ignorar dependencias instaladas
