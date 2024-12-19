@@ -13,19 +13,6 @@ class NpoClient(BaseScraper):
         ]
         self.data = {}
 
-    def remove_duplicates(self):
-        for channel_name, program_data in self.data.items():
-            # Utilizamos un conjunto para evitar duplicados
-            seen = set()
-            unique_data = []
-            for program in program_data:
-                # Convertimos el diccionario en una tupla de pares clave-valor para que sea "hasheable"
-                program_tuple = tuple(program.items())
-                if program_tuple not in seen:
-                    seen.add(program_tuple)
-                    unique_data.append(program)
-            # Actualizamos la lista del canal con solo los datos únicos
-            self.data[channel_name] = unique_data
 
     def process_data(self, data,default_synopsis):
         processed_data = []

@@ -66,6 +66,16 @@ class BaseScraper:
                 f"{self.base_url}{date.strftime('%d-%m-%Y')}&guid="
                 for date in dates
             ]
+        elif url_format == "my9":
+            # my9 format: Replace the date and add hourly intervals (e.g., 0000, 0100, ... 2300)
+            urls = []
+            for date in dates:
+                date_str = date.strftime('%Y%m%d')  # Format date as YYYYMMDD
+                for hour in range(0, 24):
+                    hour_str = f"{hour:02}00"  # Format hour as HHMM
+                    url = f"{self.base_url}{date_str}{hour_str}/240/292/7"
+                    urls.append(url)
+            return urls
         else:
             # Default URL format (using %Y-%m-%d for the date)
             return [
@@ -160,3 +170,17 @@ class BaseScraper:
                 return "n/a"
         except TimeoutError:
             return "No disponible"
+
+    def remove_duplicates(self):
+        for key_name, program_data in self.data.items():
+            # Utilizamos un conjunto para evitar duplicados
+            seen = set()
+            unique_data = []
+            for program in program_data:
+                # Convertimos el diccionario en una tupla de pares clave-valor para que sea "hasheable"
+                program_tuple = tuple(program.items())
+                if program_tuple not in seen:
+                    seen.add(program_tuple)
+                    unique_data.append(program)
+            # Actualizamos la lista del canal con solo los datos únicos
+            self.data[key_name] = unique_data

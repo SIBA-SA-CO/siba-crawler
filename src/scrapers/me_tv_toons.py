@@ -1,4 +1,6 @@
 import logging
+import re
+from datetime import datetime
 from playwright.sync_api import sync_playwright
 from .base_scraper import BaseScraper
 from datetime import datetime
@@ -12,8 +14,6 @@ class MeTvToons(BaseScraper):
         """
         Convierte una hora en formato '6:00am ET' a '06:00'.
         """
-        import re
-        from datetime import datetime
 
         # Usa regex para extraer la hora y el período (am/pm)
         match = re.match(r"(\d{1,2}:\d{2})(am|pm)", time_text.lower())
@@ -44,6 +44,37 @@ class MeTvToons(BaseScraper):
 
                 # Localiza el contenedor
                 container = page.locator(f'xpath={container_xpath}')
+
+                # Buscar el evento en section.current-show-wrapper
+                current_show_wrapper = container.locator('section.current-show-wrapper')
+                current_show_exists = current_show_wrapper.count() >= 1 
+
+                # Si existe un evento en current-show-wrapper, extraer datos
+                if current_show_exists:
+                    current_event = current_show_wrapper.first  # Tomar el primer (y único) evento en esta sección
+                    # Extrae los textos de los elementos especificados
+                    show_time_raw = self.get_text_if_exists(current_event, '.sched-show-title')
+                    show_time_raw = show_time_raw[-10:].strip()
+                    show_time = self.format_time(show_time_raw)
+                    show_name = self.get_text_if_exists(current_event, '.current-show-title')
+                    episode_title = self.get_text_if_exists(current_event, '.current-episode-title')
+                    description = self.get_text_if_exists(current_event, 'p')
+                    
+                    if description != "n/a" and episode_title != "n/a":
+                        content = f"{episode_title} - {description}"
+                    elif description != "n/a":
+                        content = description
+                    elif episode_title != "n/a":
+                        content = episode_title
+                    else:
+                        content = default_synopsis
+
+                    events_data.append({
+                        "date": date,  # Se asume que 'date' ya está definido
+                        "hour": show_time,
+                        "title": show_name,
+                        "content": content,
+                    })
 
                 # Busca y cuenta los eventos dentro del contenedor
                 events = container.locator('div.sched-item')
