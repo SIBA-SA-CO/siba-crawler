@@ -4,13 +4,9 @@ from .base_scraper import BaseScraper
 from datetime import datetime, timedelta
 
 class NpoClient(BaseScraper):
-    def __init__(self, base_url):
-        super().__init__(base_url)
-        self.clients = [
-            ("2042e1ee-0e79-4766-aea2-5b300d6839b2", "NPO3"),
-            ("316951f5-ce06-41d2-ae24-44eb25368a61", "NPO2"),
-            ("83dc1f25-a065-496c-9418-bd5c60dfb36d", "NPO1")
-        ]
+    def __init__(self, channel_config):
+        super().__init__(channel_config["url"])
+        self.channel_config = channel_config
         self.data = {}
 
 
@@ -43,22 +39,24 @@ class NpoClient(BaseScraper):
         return processed_data
 
     def scrape_program_guide(self, initial_date_str, days_range, char_replacements=None):
-        file_path = './data/npo'
+        file_path = self.channel_config['output_path']
         urls = self.get_date_urls(initial_date_str, days_range,"npo")
-        default_synopsis = "Programma "
         for url in urls:
-            for client_id, channel_name in self.clients:
+            for channel  in self.channel_config['sub_channels']:
+                channel_name = channel.get("file_name")
+                client_id =  channel.get("id")
+                default_synopsis = channel.get("default_description")
                 client_url = f"{url}{client_id}"
                 data = self.fetch_data(client_url)
                 if data:
-                    programacion = self.process_data(data, default_synopsis + channel_name)
+                    programacion = self.process_data(data, default_synopsis)
                     if channel_name in self.data:
                         self.data[channel_name].extend(programacion)
                     else:
                         self.data[channel_name] = programacion
 
 
-        #Borrar los duplicados
+        # #Borrar los duplicados
         self.remove_duplicates()
 
         for channel_name, program_data in self.data.items():

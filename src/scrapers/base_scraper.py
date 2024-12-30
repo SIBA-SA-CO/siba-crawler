@@ -128,8 +128,8 @@ class BaseScraper:
         :param char_replacements: Reemplazos de caracteres opcionales.
         :param file_path: Ruta base para guardar el archivo.
         """
-        fecha_actual = datetime.now().strftime("%Y%m%d_%H%M%S")
-        file_name = f"{channel_name}_program_guide_{fecha_actual}.txt"
+        
+        file_name = f"{channel_name}.txt"
         full_file_path = os.path.join(file_path, file_name)
 
         try:

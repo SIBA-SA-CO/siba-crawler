@@ -8,9 +8,10 @@ venv/
 logs/*.log
 data/npo/*.txt
 data/bvn/*.txt
-data/metv/*.txt
+data/metvtoons/*.txt
 data/bet/*.txt
 data/my9/*.txt
+data/gameshow/*.txt
 
 
 # Ignorar dependencias instaladas

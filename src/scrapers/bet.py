@@ -4,8 +4,9 @@ from datetime import datetime, timedelta
 from .base_scraper import BaseScraper
 
 class Bet(BaseScraper):
-    def __init__(self, base_url ):
-        super().__init__(base_url)
+    def __init__(self,channel_config):
+        super().__init__(channel_config["url"])
+        self.channel_config = channel_config
         self.data = {}
 
     def process_data(self, data,default_synopsis,date_key):
@@ -50,8 +51,9 @@ class Bet(BaseScraper):
         Obtiene la guía de programas de BVN TV para los días antes y después de la fecha inicial.
         """
         urls = self.get_date_urls(initial_date, days_range)
-        file_path = './data/bet'
-        default_synopsis = "Programma Bet"
+        file_path = self.channel_config['output_path']
+        default_synopsis = self.channel_config['default_description']
+        file_name = self.channel_config['file_name']
         for url in urls:
             logging.info(f"Procesando: {url}")
             data = self.fetch_data(url)
@@ -59,4 +61,4 @@ class Bet(BaseScraper):
                 date_key = url.split("/")[-2]
                 self.data[date_key] = self.process_data(data,default_synopsis,date_key)
                 
-        self.save_data_to_txt("Bet", self.data, char_replacements,file_path)
+        self.save_data_to_txt(file_name, self.data, char_replacements,file_path)

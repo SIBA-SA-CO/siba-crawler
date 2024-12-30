@@ -6,8 +6,9 @@ from .base_scraper import BaseScraper
 from datetime import datetime
 
 class MeTvToons(BaseScraper):
-    def __init__(self, base_url ):
-        super().__init__(base_url)
+    def __init__(self, channel_config ):
+        super().__init__(channel_config["url"])
+        self.channel_config = channel_config
         self.data = {}
 
     def format_time(self,time_text):
@@ -123,12 +124,13 @@ class MeTvToons(BaseScraper):
     def scrape_program_guide(self, initial_date, days_range, char_replacements=None):
         
         urls = self.get_date_urls(initial_date, days_range)
-        file_path = './data/metv'
-        default_synopsis = "Program MeTv"
+        file_path = self.channel_config['output_path']
+        default_synopsis = self.channel_config['default_description']
+        file_name = self.channel_config['file_name']
         for url in urls:
             logging.info(f"Procesando: {url}")
             data = self.fetch_data_proccess_data(url,default_synopsis)
             if data:
                 date_key = url.split("/")[-2]
                 self.data[date_key] = data
-        self.save_data_to_txt("MeTvToons", self.data, char_replacements,file_path)
+        self.save_data_to_txt(file_name, self.data, char_replacements,file_path)

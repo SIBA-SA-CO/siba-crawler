@@ -4,8 +4,9 @@ from datetime import datetime, timedelta
 from .base_scraper import BaseScraper
 
 class My9(BaseScraper):
-    def __init__(self, base_url ):
-        super().__init__(base_url)
+    def __init__(self, channel_config ):
+        super().__init__(channel_config["url"])
+        self.channel_config = channel_config
         self.data = {}
 
     def process_data(self, data,default_synopsis,date_key):
@@ -63,12 +64,11 @@ class My9(BaseScraper):
         return processed_data
 
     def scrape_program_guide(self, initial_date, days_range, char_replacements=None):
-        """
-        Obtiene la guía de programas de BVN TV para los días antes y después de la fecha inicial.
-        """
+
         urls = self.get_date_urls(initial_date, days_range,"my9")
-        file_path = './data/my9'
-        default_synopsis = "Programma My9"
+        file_path = self.channel_config['output_path']
+        default_synopsis = self.channel_config['default_description']
+        file_name = self.channel_config['file_name']
         for url in urls:
             logging.info(f"Procesando: {url}")
             data = self.fetch_data(url)
@@ -84,4 +84,4 @@ class My9(BaseScraper):
         #Borrar los duplicados
         self.remove_duplicates()
 
-        self.save_data_to_txt("My9", self.data, char_replacements,file_path)
+        self.save_data_to_txt(file_name, self.data, char_replacements,file_path)
