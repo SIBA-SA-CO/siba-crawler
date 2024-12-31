@@ -1,0 +1,56 @@
+# Configuración de canales
+CHANNELS = {
+    "gameshownetwork": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
+    "my9": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
+    "bet": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
+    "bvntv": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
+    "metvtoons": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
+    "npoclient": {
+        "url": "",
+        "output_path": "",
+        "sub_channels": [
+            {
+                "id": "",
+                "file_name": "",
+                "default_description": "",
+
+            },
+            {
+                "id": "",
+                "file_name": "",
+                "default_description": "",
+
+            },
+            {
+                "id": "",
+                "file_name": "",
+                "default_description": "",
+            }
+        ]
+    }
+}

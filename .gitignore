@@ -17,3 +17,5 @@ data/gameshow/*.txt
 # Ignorar dependencias instaladas
 __pycache__/
 *.pyc
+
+src/config.py
