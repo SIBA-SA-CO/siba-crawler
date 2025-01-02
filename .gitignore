@@ -9,9 +9,12 @@ logs/*.log
 data/npo/*.txt
 data/bvn/*.txt
 data/metvtoons/*.txt
+data/metv/*.txt
 data/bet/*.txt
 data/my9/*.txt
 data/gameshow/*.txt
+data/*.txt
+data/*/*.txt
 
 
 # Ignorar dependencias instaladas
