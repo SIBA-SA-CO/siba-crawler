@@ -47,9 +47,6 @@ class Bet(BaseScraper):
         return processed_data
 
     def scrape_program_guide(self, initial_date, days_range, char_replacements=None):
-        """
-        Obtiene la guía de programas de BVN TV para los días antes y después de la fecha inicial.
-        """
         urls = self.get_date_urls(initial_date, days_range)
         file_path = self.channel_config['output_path']
         default_synopsis = self.channel_config['default_description']

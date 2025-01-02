@@ -64,7 +64,6 @@ class My9(BaseScraper):
         return processed_data
 
     def scrape_program_guide(self, initial_date, days_range, char_replacements=None):
-
         urls = self.get_date_urls(initial_date, days_range,"my9")
         file_path = self.channel_config['output_path']
         default_synopsis = self.channel_config['default_description']

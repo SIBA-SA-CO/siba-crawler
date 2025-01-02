@@ -122,7 +122,6 @@ class MeTvToons(BaseScraper):
             return events_data_sorted
 
     def scrape_program_guide(self, initial_date, days_range, char_replacements=None):
-        
         urls = self.get_date_urls(initial_date, days_range)
         file_path = self.channel_config['output_path']
         default_synopsis = self.channel_config['default_description']

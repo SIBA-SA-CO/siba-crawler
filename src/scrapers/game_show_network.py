@@ -54,7 +54,6 @@ class GameShowNetwork(BaseScraper):
       
 
     def scrape_program_guide(self, initial_date, days_range, char_replacements=None):
-   
         file_path = self.channel_config['output_path']
         default_synopsis = self.channel_config['default_description']
         file_name = self.channel_config['file_name']

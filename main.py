@@ -10,7 +10,9 @@ def main():
         "'": "’",
         "“": '"',
         " \r\n": " ",
-        "---": "-"
+        "---": "-",
+        '\n': ' ',
+        '|': '/'
     }
 
     # Configuración del parser de argumentos
