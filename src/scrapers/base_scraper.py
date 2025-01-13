@@ -66,7 +66,7 @@ class BaseScraper:
                 f"{self.base_url}{date.strftime('%d-%m-%Y')}&guid="
                 for date in dates
             ]
-        elif url_format == "my9":
+        elif url_format == "titantv":
             # my9 format: Replace the date and add hourly intervals (e.g., 0000, 0100, ... 2300)
             urls = []
             for date in dates:

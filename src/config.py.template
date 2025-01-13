@@ -1,5 +1,11 @@
 # Configuración de canales
 CHANNELS = {
+    "fox19now": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
     "metv": {
         "file_name": "",
         "url": "",

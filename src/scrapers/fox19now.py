@@ -3,7 +3,7 @@ import logging
 from datetime import datetime, timedelta
 from .base_scraper import BaseScraper
 
-class My9(BaseScraper):
+class Fox19Now(BaseScraper):
     def __init__(self, channel_config ):
         super().__init__(channel_config["url"])
         self.channel_config = channel_config
@@ -13,7 +13,7 @@ class My9(BaseScraper):
 
         processed_data = []
 
-        for show in data['Json']['Channels'][4]["Days"][0]["Shows"]:
+        for show in data['Json']['Channels'][0]["Days"][0]["Shows"]:
 
             program_start = show.get("StartTime")
 
