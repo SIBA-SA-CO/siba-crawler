@@ -173,7 +173,7 @@ class BaseScraper:
 
     def remove_duplicates(self):
         for key_name, program_data in self.data.items():
-            # Utilizamos un conjunto para evitar duplicados
+            # Utilizamos un conjunto para evitar duplicados - Elimina duplicados de una lista o diccionario jerárquico.
             seen = set()
             unique_data = []
             for program in program_data:
@@ -184,3 +184,14 @@ class BaseScraper:
                     unique_data.append(program)
             # Actualizamos la lista del canal con solo los datos únicos
             self.data[key_name] = unique_data
+
+    def remove_duplicates_flat_list(self, data):
+        # Elimina duplicados de una lista plana.
+        seen = set()
+        unique_data = []
+        for item in data:
+            unique_key = (item['date'], item['hour'], item['title'],item['content'])
+            if unique_key not in seen:
+                seen.add(unique_key)
+                unique_data.append(item)
+        return unique_data

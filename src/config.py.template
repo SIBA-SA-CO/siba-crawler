@@ -1,5 +1,11 @@
 # Configuración de canales
 CHANNELS = {
+    "venevision": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
     "fox19now": {
         "file_name": "",
         "url": "",
