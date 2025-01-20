@@ -1,5 +1,11 @@
 # Configuración de canales
 CHANNELS = {
+    "ewtn": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
     "venevision": {
         "file_name": "",
         "url": "",
