@@ -1,5 +1,11 @@
 # Configuración de canales
 CHANNELS = {
+    "hopetv": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
     "ewtn": {
         "file_name": "",
         "url": "",

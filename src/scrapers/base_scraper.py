@@ -76,6 +76,13 @@ class BaseScraper:
                     url = f"{self.base_url}{date_str}{hour_str}/240/292/7"
                     urls.append(url)
             return urls
+        elif url_format == "hopetv":
+            urls = []
+            for date in dates:
+                date_str = date.strftime('%Y-%m-%d')
+                url = f"{self.base_url}{date_str}T00%3A00%3A00-05%3A00"
+                urls.append(url)
+            return urls
         else:
             # Default URL format (using %Y-%m-%d for the date)
             return [
