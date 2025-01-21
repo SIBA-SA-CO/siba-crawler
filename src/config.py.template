@@ -1,5 +1,11 @@
 # Configuración de canales
 CHANNELS = {
+    "starttv": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
     "hopetv": {
         "file_name": "",
         "url": "",
