@@ -6,6 +6,12 @@ CHANNELS = {
         "default_description": "",
         "output_path": ""
     },
+    "tbn": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
     "hopetv": {
         "file_name": "",
         "url": "",
