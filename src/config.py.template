@@ -1,5 +1,11 @@
 # Configuración de canales
 CHANNELS = {
+    "nhl": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
     "ulfn": {
         "file_name": "",
         "url": "",
