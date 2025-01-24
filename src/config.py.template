@@ -6,6 +6,12 @@ CHANNELS = {
         "default_description": "",
         "output_path": ""
     },
+    "mlb": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
     "starttv": {
         "file_name": "",
         "url": "",
