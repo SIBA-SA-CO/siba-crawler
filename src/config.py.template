@@ -1,5 +1,11 @@
 # Configuración de canales
 CHANNELS = {
+    "colorvision": {
+        "file_name": "",
+        "url": "",
+        "default_description": "",
+        "output_path": ""
+    },
     "nhl": {
         "file_name": "",
         "url": "",
