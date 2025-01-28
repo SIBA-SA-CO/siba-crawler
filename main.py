@@ -16,6 +16,7 @@ def main():
         '': '-',  
         '': '"',  
         '': '"',
+        "|": "-"
     }
 
     # Configuración del parser de argumentos

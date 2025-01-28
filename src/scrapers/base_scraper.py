@@ -22,14 +22,14 @@ class BaseScraper:
         logging.basicConfig(filename=log_file_path, level=logging.INFO,
                             format='%(asctime)s - %(levelname)s - %(message)s', encoding='utf-8')
 
-    def fetch_data(self, url):
+    def fetch_data(self, url, headers=None):
         """
         Obtiene los datos JSON desde la URL especificada con reintentos.
         """
         attempt = 0
         while attempt < self.retries:
             try:
-                response = requests.get(url)
+                response = requests.get(url, headers=headers)
                 response.raise_for_status()  # Verifica errores HTTP
                 logging.info(f"Éxito al obtener datos de {url}")
                 return response.json()  # Retorna el contenido como JSON
@@ -81,6 +81,14 @@ class BaseScraper:
             for date in dates:
                 date_str = date.strftime('%Y-%m-%d')
                 url = f"{self.base_url}{date_str}T00%3A00%3A00-05%3A00"
+                urls.append(url)
+            return urls
+        elif url_format == "beinsports":
+            urls = []
+            for date in dates:
+                start_before = (date + timedelta(days=1)).strftime('%Y-%m-%dT04%%3A59%%3A59.999Z')
+                end_after = date.strftime('%Y-%m-%dT05%%3A00%%3A00.000Z')
+                url = f"{self.base_url}startBefore={start_before}&endAfter={end_after}&limit=3000&channelIds=C244C48D-3B54-406A-94C9-D63B16318267"
                 urls.append(url)
             return urls
         else:
