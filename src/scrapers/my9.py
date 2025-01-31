@@ -13,7 +13,7 @@ class My9(BaseScraper):
 
         processed_data = []
 
-        for show in data['Json']['Channels'][4]["Days"][0]["Shows"]:
+        for show in data['Json']['Channels'][0]["Days"][0]["Shows"]:
 
             program_start = show.get("StartTime")
 

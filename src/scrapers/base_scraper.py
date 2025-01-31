@@ -68,12 +68,15 @@ class BaseScraper:
             ]
         elif url_format == "titantv":
             # my9 format: Replace the date and add hourly intervals (e.g., 0000, 0100, ... 2300)
+            url_split = self.base_url.split("/")
+            base_url = "/".join(url_split[:7]) + "/"
+            extra_path = "/" + "/".join(url_split[8:])
             urls = []
             for date in dates:
                 date_str = date.strftime('%Y%m%d')  # Format date as YYYYMMDD
                 for hour in range(0, 24):
                     hour_str = f"{hour:02}00"  # Format hour as HHMM
-                    url = f"{self.base_url}{date_str}{hour_str}/240/292/7"
+                    url = f"{base_url}{date_str}{hour_str}{extra_path}"
                     urls.append(url)
             return urls
         elif url_format == "hopetv":
