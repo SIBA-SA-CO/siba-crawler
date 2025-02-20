@@ -2,6 +2,7 @@ import os
 import pytest
 from src.config import CHANNELS
 from main import runScraper
+from datetime import datetime
 
 def clearOutputFiles():
     """
@@ -28,7 +29,7 @@ def testScraperOutput():
     """
     clearOutputFiles()
     
-    initialDate = "2025-02-14"  # Uses a fixed date for consistency
+    initialDate = datetime.now().strftime("%Y-%m-%d")  
     daysRange = 0
     characterReplacements = {
         '&': 'en', "'": "’", "“": '"', " \r\n": " ", '\n': ' ',

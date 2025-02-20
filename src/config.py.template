@@ -1,122 +1,190 @@
-# Configuración de canales
 CHANNELS = {
-    "beinsports": {
-        "file_name": "",
+    "beinsportsscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": ",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "nhl": {
-        "file_name": "",
+    "nhlscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "", 
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "ulfn": {
-        "file_name": "",
+    "mlbscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "mlb": {
-        "file_name": "",
+    "ulfnscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "starttv": {
-        "file_name": "",
+    "tbnscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "tbn": {
-        "file_name": "",
+    "starttvscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "hopetv": {
-        "file_name": "",
+    "hopetvscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "ewtn": {
-        "file_name": "",
+    "ewtnscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "venevision": {
-        "file_name": "",
+    "venevisionscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "fox19now": {
-        "file_name": "",
+    "fox19nowscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
+
     },
-    "metv": {
-        "file_name": "",
+    "metvscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "gameshownetwork": {
-        "file_name": "",
+    "gameshownetworkscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "my9": {
-        "file_name": "",
+    "my9scraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "bet": {
-        "file_name": "",
+    "betscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "bvntv": {
-        "file_name": "",
+    "bvntvscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "metvtoons": {
-        "file_name": "",
+    "metvtoonsscraper": {
+        "fileName": "",
         "url": "",
-        "default_description": "",
-        "output_path": ""
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     },
-    "npoclient": {
+    "nposcraper": {
         "url": "",
-        "output_path": "",
-        "sub_channels": [
+        "outputPath": "",
+        "subChannels": [
             {
                 "id": "",
-                "file_name": "",
-                "default_description": "",
+                "fileName": "",
+                "defaultDescription": "",
 
             },
             {
                 "id": "",
-                "file_name": "",
-                "default_description": "",
+                "fileName": "",
+                "defaultDescription": "",
 
             },
             {
                 "id": "",
-                "file_name": "",
-                "default_description": "",
+                "fileName": "",
+                "defaultDescription": "",
             }
-        ]
+        ],
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
     }
 }
