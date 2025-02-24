@@ -1,40 +1,18 @@
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'metv'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'gameshownetwork'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'bet'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'bvntv'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'metvtoons'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'npoclient'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'my9'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'fox19now'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'venevision'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'ewtn'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'hopetv'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'starttv'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'tbn'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'ulfn'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'mlb'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'nhl'" && \
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'beinsports'"
-
-
-
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'metv'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'gameshownetwork'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'bet'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'bvntv'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'metvtoons'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'npoclient'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'my9'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'fox19now'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'venevision'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'ewtn'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'hopetv'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'starttv'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'tbn'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'ulfn'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'mlb'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'nhl'"
-docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initial_date 'YYYY-MM-DD' --days_range 7 --channel 'beinsports'"
-
-
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'metvscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'gameshownetworkscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'betscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'bvntvscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'metvtoonsscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'nposcraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'my9scraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'fox19nowscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'venevisionscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'ewtnscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'hopetvscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'starttvscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'tbnscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'ulfnscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'mlbscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'nhlscraper'" && \
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'beinsportsscraper'"
 
