@@ -1,6 +1,5 @@
 import os
 import re
-import logging
 
 class FileWriter:
     """
@@ -8,11 +7,17 @@ class FileWriter:
     """
 
     def __init__(self, logger):
+        """
+        Initializes the FileWriter.
+
+        Args:
+            logger: Logger instance to log info and errors.
+        """
         self.logger = logger
 
     def writeProgramData(self, file, program, currentDate, charReplacements=None):
         """
-        Writes program data to a text file.
+        Writes program data to a text file, truncating title if it exceeds 120 characters.
 
         Args:
             file: The open file object where data will be written.
@@ -39,6 +44,10 @@ class FileWriter:
 
         title = title.strip("-")
         content = content.strip("-")
+
+        # Truncate title if it exceeds 120 characters
+        if len(title) > 120:
+            title = title[:120]
 
         # Write the date only if it changes
         if date != currentDate:
@@ -67,7 +76,7 @@ class FileWriter:
         channelFolder = os.path.join(filePath)
         os.makedirs(channelFolder, exist_ok=True)
 
-        # Generate the file name with the current date
+        # Generate the file name
         fileName = f"{channelName}.txt"
         fullFilePath = os.path.join(channelFolder, fileName)
 
@@ -75,7 +84,7 @@ class FileWriter:
             with open(fullFilePath, 'w', encoding='utf-8') as file:
                 currentDate = None
 
-                # If programData is a dictionary (grouped by date)
+                # If programData is a dictionary
                 if isinstance(programData, dict):
                     for date, programs in programData.items():
                         for program in programs:
