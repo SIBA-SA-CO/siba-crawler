@@ -73,7 +73,7 @@ class UlfnDataProcessor(IDataProcessor):
                 - "content" (str): Event description or default text.
         """
         scheduleByDayType = {
-            'Weekdays(Eastern Time)': [],
+            'Weekdays(Eastern Time)Updates': [],
             'Saturday (Eastern Time)': [],
             'Sunday (Eastern Time)': []
         }
@@ -105,7 +105,7 @@ class UlfnDataProcessor(IDataProcessor):
         # Assign events to correct dates
         for date in dateRange:
             if date.weekday() < 5:
-                dayType = 'Weekdays(Eastern Time)'
+                dayType = 'Weekdays(Eastern Time)Updates'
             elif date.weekday() == 5:
                 dayType = 'Saturday (Eastern Time)'
             elif date.weekday() == 6:
