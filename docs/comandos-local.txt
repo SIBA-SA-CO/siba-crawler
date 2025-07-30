@@ -16,4 +16,5 @@ docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activat
 docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'nhlscraper'" && \
 docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'beinsportsscraper'" && \
 docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'warnerscraper'"
+docker exec -it siba-crawler /bin/bash -c "source /var/www/app/.venv/bin/activate && python main.py --initialDate 'YYYY-MM-DD' --daysRange 7 --channel 'rushprimescraper'"
 
