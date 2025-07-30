@@ -3,6 +3,7 @@ docker-compose.yml
 # Ignorar entornos virtuales
 venv/
 .venv/
+.env
 
 # Ignorar logs y datos temporales
 logs/*.log

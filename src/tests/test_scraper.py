@@ -3,6 +3,7 @@ import pytest
 from src.config import CHANNELS
 from main import runScraper
 from datetime import datetime
+from dotenv import load_dotenv
 
 def clearOutputFiles():
     """
@@ -35,7 +36,7 @@ def testScraperOutput():
         '&': 'en', "'": "’", "“": '"', " \r\n": " ", '\n': ' ',
         '': "’", '': '-', '': '"', '': '"', "|": "-"
     }
-    
+    load_dotenv()
     for channelName, channel in CHANNELS.items():
         if "subChannels" in channel:
             outputDir = channel["outputPath"]

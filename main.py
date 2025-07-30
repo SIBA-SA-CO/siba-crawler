@@ -4,6 +4,7 @@ from datetime import datetime
 from src.config import CHANNELS
 from src.scrapers import discoverScrapers
 from src.scrapers.core.logger import Logger
+from dotenv import load_dotenv
 
 def loadClassFromModulePath(classPath):
     """
@@ -81,6 +82,7 @@ def main():
         
     }
 
+    load_dotenv()
     argumentParser = argparse.ArgumentParser(description="TV Program Guide Scraper")
     argumentParser.add_argument(
         "--initialDate", type=str, default=datetime.now().strftime("%Y-%m-%d"), 
