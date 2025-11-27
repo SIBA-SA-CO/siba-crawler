@@ -56,7 +56,7 @@ class StartTvDataProcessor(IDataProcessor):
             eventDate = targetEventDatetime.strftime("%Y-%m-%d").strip()
             eventTime = targetEventDatetime.strftime("%H:%M").strip()
 
-            title = item.find('h1', class_='hp-section-header sched-inline').text.strip()
+            title = item.find('h1', class_='sched-inline').text.strip()
 
             episodeTitle = ""
             description = ""
@@ -65,11 +65,17 @@ class StartTvDataProcessor(IDataProcessor):
             descriptionElement = item.find('div', class_='sched-show-desc')
 
             if descriptionElement:
-                episodeElement = descriptionElement.find('h2')
-                episodeTitle = episodeElement.text.strip() if episodeElement else ""
-                description = (
-                    episodeElement.next_sibling.strip() if episodeElement and episodeElement.next_sibling else ""
+                episodeElement = descriptionElement.find('h4')
+                texts = descriptionElement.find_all(string=True, recursive=False)
+
+                # Limpieza: quita vacíos, saltos de línea, y caracteres especiales
+                description = ' '.join(
+                    t.strip().replace('\xa0', ' ') for t in texts if t.strip()
                 )
+                episodeTitle = episodeElement.text.strip() if episodeElement else ""
+                # description = (
+                #     episodeElement.next_sibling.strip() if episodeElement and episodeElement.next_sibling else ""
+                # )
 
             if episodeTitle and description:
                 content = f"{episodeTitle} - {description}"

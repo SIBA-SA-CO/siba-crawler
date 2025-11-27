@@ -34,8 +34,25 @@ class HopeTvDataFetcher(IDataFetcher):
         for attempt in range(retries):
             try:
                 with sync_playwright() as playwright:
-                    browser = playwright.chromium.launch(headless=True, slow_mo=500)
-                    page = browser.new_page()
+                    browser = playwright.chromium.launch(headless=True, slow_mo=5000,args=[
+                            "--disable-blink-features=AutomationControlled",
+                            "--disable-infobars",
+                            "--disable-blink-features"
+                        ])
+                    
+                    context = browser.new_context(
+                        locale="en-US",
+                        timezone_id="America/New_York",
+                        permissions=["geolocation"],
+                        user_agent=(
+                            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                            "AppleWebKit/537.36 (KHTML, like Gecko) "
+                            "Chrome/120.0.0.0 Safari/537.36"
+                        ),
+                        viewport={"width": 1366, "height": 768}
+                    )
+
+                    page = context.new_page()
 
                     def handleResponse(response):
                         if "schedule" in response.url:

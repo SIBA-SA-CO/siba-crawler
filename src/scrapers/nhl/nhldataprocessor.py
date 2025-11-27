@@ -54,7 +54,7 @@ class NhlDataProcessor(IDataProcessor):
             eventTime = targetEventDatetime.strftime("%H:%M").strip()
 
             title = broadcast.get("title") or title
-            description = broadcast.get("description") or description
+            description = broadcast.get("description")
 
             if description:
                 content = description

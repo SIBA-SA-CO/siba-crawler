@@ -31,7 +31,9 @@ class BeinSportsScraper(ScraperBase):
         # Set up headers for the HTTP requests
         self.headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36",
-            "Accept": "application/json"
+            "Accept": "application/json",
+            "X-Forwarded-For": "104.28.0.10, 172.70.0.5, 127.0.0.1",
+            "Forwarded": "for=104.28.0.10;proto=https",
         }
 
         # Iterate over each URL and process the data
