@@ -8,6 +8,7 @@ greenlet==3.1.1
 idna==3.7
 iniconfig==2.0.0
 numpy==2.3.2
+openpyxl==3.1.5
 packaging==24.2
 pandas==2.3.1
 playwright==1.49.1

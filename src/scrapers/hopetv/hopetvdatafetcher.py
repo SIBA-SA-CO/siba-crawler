@@ -34,7 +34,7 @@ class HopeTvDataFetcher(IDataFetcher):
         for attempt in range(retries):
             try:
                 with sync_playwright() as playwright:
-                    browser = playwright.chromium.launch(headless=True, slow_mo=5000,args=[
+                    browser = playwright.chromium.launch(headless=True, slow_mo=3000,args=[
                             "--disable-blink-features=AutomationControlled",
                             "--disable-infobars",
                             "--disable-blink-features"

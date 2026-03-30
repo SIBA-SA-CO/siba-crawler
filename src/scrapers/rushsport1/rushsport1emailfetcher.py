@@ -1,36 +1,19 @@
-# src/scrapers/core/emailattachmentdatafetcher.py
-
 import email
 import fnmatch
 import imaplib
 import os
 from email.header import decode_header
-from typing import Callable
 
-from src.scrapers.core.interfaces.idatafetcher import IDataFetcher
+from src.scrapers.rushsport1.parserushsport1xlsx import parseRushSport1Xlsx
 
 
-class EmailAttachmentDataFetcher(IDataFetcher):
-    """
-    DataFetcher que obtiene datos desde un archivo adjunto de correo electrónico,
-    filtrando por asunto y por extensión de archivo.
-    """
-
-    def __init__(
-        self,
-        logger,
-        subject_filter: str,
-        file_extension: str,
-        parser: Callable[[bytes], dict],
-        subject_filters: list[str] | None = None,
-        filename_pattern: str | None = None
-    ):
+class RushSport1EmailFetcher:
+    def __init__(self, logger):
         self.logger = logger
-        self.subject_filter = subject_filter
-        self.subject_filters = [value for value in (subject_filters or [subject_filter]) if value]
-        self.file_extension = file_extension.lower()
-        self.parser = parser
-        self.filename_pattern = filename_pattern.lower() if filename_pattern else None
+        self.subject_filter = "RUSH Schedule"
+        self.subject_filters = ["RUSH Schedule"]
+        self.file_extension = ".xlsx"
+        self.filename_pattern = "rushprogramming schedule (rush sports 1)*"
 
         self.host = os.getenv("EMAIL_IMAP_HOST")
         self.username = os.getenv("EMAIL_USERNAME")
@@ -82,25 +65,18 @@ class EmailAttachmentDataFetcher(IDataFetcher):
                 if not normalized_filename.endswith(self.file_extension):
                     continue
 
-                if self.filename_pattern and not fnmatch.fnmatch(normalized_filename, self.filename_pattern):
+                if not fnmatch.fnmatch(normalized_filename, self.filename_pattern):
                     continue
 
                 file_content = part.get_payload(decode=True)
-                return self.parser(file_content)
+                return parseRushSport1Xlsx(file_content)
 
-        if self.filename_pattern:
-            self.logger.logCritical(
-                f"No se encontró archivo '{self.filename_pattern}' con extensión '{self.file_extension}'."
-            )
-            return {}
-
-        self.logger.logCritical(f"No se encontró archivo con extensión '{self.file_extension}'.")
+        self.logger.logCritical(
+            f"No se encontró archivo '{self.filename_pattern}' con extensión '{self.file_extension}'."
+        )
         return {}
 
     def _subject_matches(self, subject: str) -> bool:
-        if not subject:
-            return True
-
         normalized_subject = subject.lower()
         return any(filter_value.lower() in normalized_subject for filter_value in self.subject_filters)
 

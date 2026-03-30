@@ -1,89 +1,117 @@
+import json
 import pytz
 import re
-import json
-from datetime import datetime, timezone
+from datetime import datetime
 from src.scrapers.core.interfaces.idataprocessor import IDataProcessor
+
 
 class GameShowNetworkDataProcessor(IDataProcessor):
     """
-    A class to process Game Show Network event data and filter events based on a specific date.
+    Processes Game Show Network schedule data from the JSON API response.
 
-    This class takes raw HTML data, extracts relevant event details such as title, 
-    description, and date/time, adjusts the time zone, and returns a list of 
-    processed events for a given date.
+    The site now renders schedule cards client-side from a JSON endpoint, so this
+    processor handles the API payload directly and keeps a lightweight HTML-string
+    fallback for resilience.
     """
 
     def __init__(self, timezone: str):
-        """
-        Initializes the data processor with the source timezone.
-
-        Args:
-            timezone (str): The source timezone of the events.
-        """
         self.sourceTimezone = pytz.timezone(timezone)
         self.targetTimezone = pytz.timezone("America/Bogota")
 
-    def processData(self, rawData: str, defaultDescription: str, targetDate: str) -> list:
-        """
-        Processes the raw event data, extracts relevant information, adjusts timezones,
-        and returns a list of events filtered by the target date.
-
-        Args:
-            rawData (str): Raw HTML data containing event information.
-            defaultDescription (str): Default description to use if no specific description is found.
-            targetDate (str): The target date to filter events (format: 'YYYY-MM-DD').
-
-        Returns:
-            list: A list of dictionaries, each representing a processed event with the following keys:
-                - 'date' (str): The event date in 'YYYY-MM-DD' format.
-                - 'hour' (str): The event start time in 'HH:MM' format.
-                - 'title' (str): The title of the event.
-                - 'content' (str): A formatted description of the event, combining host and description
-                  if available, or falling back to the default description.
-        """
+    def processData(self, rawData, defaultDescription: str, targetDate: str) -> list:
         processedEvents = []
+        scheduleItems = self._extractScheduleItems(rawData)
 
-        # Parse the HTML content to extract the schedule data
-        pattern = r'<script[^>]*>\s*siteSettings\.schedule\s*=\s*(\[.*?\]);'
-        match = re.search(pattern, rawData, re.DOTALL)
+        for item in scheduleItems:
+            startTime = item.get("STARTDATETIME")
+            title = self._normalizeText(item.get("EPISODESERIESTITLE") or item.get("TAPE_TITLE") or "")
+            if not startTime or not title:
+                continue
 
-        if match:
-            schedule = match.group(1)
-            data = json.loads(schedule)
+            eventDateTime = self._parseSourceDatetime(startTime)
+            if not eventDateTime:
+                continue
 
-            # Iterate over each event in the schedule data
-            for item in data:
-                eventContent = defaultDescription  # Default content if no metadata is found
+            localizedEventDatetime = self.sourceTimezone.localize(eventDateTime)
+            targetEventDatetime = localizedEventDatetime.astimezone(self.targetTimezone)
 
-                # Extract event details
-                programStart = item.get('startTime')
-                title = item.get('title')
-                host = item.get('host', "")
-                description = item.get('description', "")
+            hostName = self._formatHostName(item.get("EPISODEHOSTNAME", ""))
+            description = self._normalizeText(
+                item.get("EPISODE_DESCRIPTION")
+                or item.get("EPISODEDESCRIPTION")
+                or item.get("CONTRACT_DESCRIPTION")
+                or ""
+            )
 
-                # Parse and convert the event start time
-                eventStartDatetime = datetime.fromtimestamp(programStart, tz=timezone.utc).replace(tzinfo=None)
-                localizedEventDatetime = self.sourceTimezone.localize(eventStartDatetime)
-                targetEventDatetime = localizedEventDatetime.astimezone(self.targetTimezone)
+            content = defaultDescription
+            if hostName and description:
+                content = f"Host: {hostName} - {description}"
+            elif description:
+                content = description
+            elif hostName:
+                content = f"Host: {hostName}"
 
-                # Format the event date and time
-                eventDate = targetEventDatetime.strftime("%Y-%m-%d")
-                eventTime = targetEventDatetime.strftime("%H:%M")
+            processedEvents.append({
+                "date": targetEventDatetime.strftime("%Y-%m-%d"),
+                "hour": targetEventDatetime.strftime("%H:%M"),
+                "title": title,
+                "content": content,
+            })
 
-                # Construct the event content based on available data
-                if description and host:
-                    eventContent = f"{host} - {description}"
-                elif description:
-                    eventContent = description
-                elif host:
-                    eventContent = host
+        return sorted(processedEvents, key=lambda x: (x["date"], x["hour"]))
 
-                # Append the processed event to the list
-                processedEvents.append({
-                    "date": eventDate,
-                    "hour": eventTime,
-                    "title": title,
-                    "content": eventContent,
-                })
+    def _extractScheduleItems(self, rawData) -> list:
+        if isinstance(rawData, list):
+            return rawData
 
-        return processedEvents
+        if isinstance(rawData, dict):
+            if isinstance(rawData.get("items"), list):
+                return rawData["items"]
+            if isinstance(rawData.get("data"), list):
+                return rawData["data"]
+            return []
+
+        if not isinstance(rawData, str):
+            return []
+
+        strippedData = rawData.strip()
+        if strippedData.startswith("[") or strippedData.startswith("{"):
+            try:
+                parsedData = json.loads(strippedData)
+                return self._extractScheduleItems(parsedData)
+            except json.JSONDecodeError:
+                pass
+
+        return self._extractEmbeddedJson(strippedData)
+
+    def _extractEmbeddedJson(self, html: str) -> list:
+        endpointMatch = re.search(
+            r'const\s+api_endpoint_url\s*=\s*"(?P<endpoint>https://[^"]+/get_show_schedule\.json)"',
+            html
+        )
+        if not endpointMatch:
+            return []
+
+        return []
+
+    def _parseSourceDatetime(self, value: str):
+        for fmt in ("%Y-%m-%dT%H:%M:%S.%f", "%Y-%m-%dT%H:%M:%S"):
+            try:
+                return datetime.strptime(value, fmt)
+            except ValueError:
+                continue
+        return None
+
+    def _normalizeText(self, value: str) -> str:
+        return re.sub(r"\s+", " ", str(value).replace("\xa0", " ")).strip()
+
+    def _formatHostName(self, rawHostName: str) -> str:
+        hostName = self._normalizeText(rawHostName)
+        if "," not in hostName:
+            return hostName
+
+        nameParts = [part.strip() for part in hostName.split(",") if part.strip()]
+        if len(nameParts) < 2:
+            return hostName
+
+        return f"{' '.join(nameParts[1:])} {nameParts[0]}".strip()
