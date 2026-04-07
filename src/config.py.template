@@ -1,8 +1,28 @@
 CHANNELS = {
+    "warnerscraper": {
+        "url": "",
+        "outputPath": "",
+        "subChannels": [
+            {
+                "id": "",
+                "fileName": "",
+                "defaultDescription": "",
+            },
+            {
+                "id": "",
+                "fileName": "",
+                "defaultDescription": "",
+            }
+        ],
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
+    },
     "beinsportsscraper": {
         "fileName": "",
         "url": "",
-        "defaultDescription": ",
+        "defaultDescription": "",
         "outputPath": "",
         "urlformatter": "",
         "datafetcher": "",
@@ -13,7 +33,7 @@ CHANNELS = {
         "fileName": "",
         "url": "",
         "defaultDescription": "",
-        "outputPath": "", 
+        "outputPath": "",
         "urlformatter": "",
         "datafetcher": "",
         "dataprocessor": "",
@@ -182,6 +202,86 @@ CHANNELS = {
                 "defaultDescription": "",
             }
         ],
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
+    },
+    "rushprimescraper": {
+        "url": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "defaultDescription": "",
+        "fileName": "",
+        "outputPath": "",
+        "timezone": ""
+    },
+    "rushsport3scraper": {
+        "url": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "defaultDescription": "",
+        "fileName": "",
+        "outputPath": "",
+        "timezone": ""
+    },
+    "rushsport1scraper": {
+        "url": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "defaultDescription": "",
+        "fileName": "",
+        "outputPath": "",
+        "timezone": ""
+    },
+    "rushsport2scraper": {
+        "url": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "defaultDescription": "",
+        "fileName": "",
+        "outputPath": "",
+        "timezone": ""
+    },
+    "rtpmundoscraper": {
+        "fileName": "",
+        "url": "",
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
+    },
+    "skysportsf1scraper": {
+        "fileName": "",
+        "url": "",
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
+    },
+    "extasyscraper": {
+        "fileName": "",
+        "url": "",
+        "defaultDescription": "",
+        "outputPath": "",
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
+    },
+    "tvesscraper": {
+        "fileName": "",
+        "url": "",
+        "defaultDescription": "",
+        "outputPath": "",
         "urlformatter": "",
         "datafetcher": "",
         "dataprocessor": "",
