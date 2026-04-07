@@ -67,4 +67,7 @@ def test_fetchData_requestError(mockGet, mockLogger):
     result = httpClient.fetchData(url)
     
     assert result is None
-    mockLogger.logError.assert_called_with(f"Error retrieving data from {url}: Request failed")
+    assert mockLogger.logError.call_count == httpClient.maxRetries
+    mockLogger.logError.assert_called_with(
+        f"Error retrieving data from {url} (Attempt {httpClient.maxRetries}/{httpClient.maxRetries}): Request failed"
+    )

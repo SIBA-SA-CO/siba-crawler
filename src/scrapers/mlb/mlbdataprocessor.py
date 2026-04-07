@@ -51,6 +51,9 @@ class MlbDataProcessor(IDataProcessor):
         """
         processedEvents = []
 
+        if not rawData or 'shows' not in rawData:
+            return processedEvents
+
         for show in rawData['shows']:
             content = defaultDescription
             

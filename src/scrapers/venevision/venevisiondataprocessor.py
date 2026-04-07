@@ -42,6 +42,9 @@ class VeneVisionDataProcessor(IDataProcessor):
                 - "content" (str): The event description or default description.
         """
         processedEvents = []
+        if not rawData:
+            return processedEvents
+
         soup = BeautifulSoup(rawData, 'html.parser')
 
         # Extract the necessary data

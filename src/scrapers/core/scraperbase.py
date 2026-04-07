@@ -20,8 +20,9 @@ class ScraperBase(IChannelScraper):
         self.urlFormatter = urlFormatter
         self.dataProcessor = dataProcessor
         self.dataFetcher = dataFetcher  
+        self.logger = Logger()
         self.urlGenerator = UrlGenerator(channelConfig["url"], urlFormatter)  # Initializes the URL generator
-        self.fileWriter = FileWriter(Logger())  # Initializes FileWriter with a logger
+        self.fileWriter = FileWriter(self.logger)  # Initializes FileWriter with a logger
         self.headers = headers  # Use provided headers or default to None
         
     def getDataFromUrl(self, url: str):
@@ -46,4 +47,12 @@ class ScraperBase(IChannelScraper):
             charReplacements (dict): Dictionary of character replacements to clean the data.
             filePath (str): Directory where the output file will be saved.
         """
+        if data is None:
+            self.logger.logError(f"Skipping file generation for {fileName}: no data was processed.")
+            return
+
+        if isinstance(data, (list, dict)) and not data:
+            self.logger.logError(f"Skipping file generation for {fileName}: processed data is empty.")
+            return
+
         self.fileWriter.saveDataToTxt(fileName, data, charReplacements, filePath)
