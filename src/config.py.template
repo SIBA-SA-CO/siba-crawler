@@ -170,6 +170,31 @@ CHANNELS = {
         "dataprocessor": "",
         "timezone": ""
     },
+    "calascraper": {
+        "url": "",
+        "outputPath": "",
+        "subChannels": [
+            {
+                "fileName": "",
+                "filenamePattern": "",
+                "defaultDescription": "",
+            },
+            {
+                "fileName": "",
+                "filenamePattern": "",
+                "defaultDescription": "",
+            },
+            {
+                "fileName": "",
+                "filenamePattern": "",
+                "defaultDescription": "",
+            }
+        ],
+        "urlformatter": "",
+        "datafetcher": "",
+        "dataprocessor": "",
+        "timezone": ""
+    },
     "metvtoonsscraper": {
         "fileName": "",
         "url": "",
