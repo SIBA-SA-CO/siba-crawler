@@ -1,9 +1,15 @@
 import io
+import email
+import imaplib
+import os
+import re
 import socket
 import time
 import zipfile
 from contextlib import contextmanager
+from email.header import decode_header
 from fnmatch import fnmatch
+from html import unescape
 from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 import requests
@@ -31,6 +37,12 @@ class CalaDropboxFetcher(IDataFetcher):
         self.timeout = 60
         self.maxRetries = 3
         self._archive_content = None
+        self._email_url = None
+        self.subject_filter = "CalaTelevision"
+
+        self.host = os.getenv("EMAIL_IMAP_HOST")
+        self.username = os.getenv("EMAIL_USERNAME")
+        self.password = os.getenv("EMAIL_PASSWORD")
 
     def fetchData(self, url: str, filename_pattern: str):
         """Retorna un DataFrame con el Excel que coincide con `filename_pattern`.
@@ -58,12 +70,17 @@ class CalaDropboxFetcher(IDataFetcher):
             self.logger.logError("Dropbox no retorno un ZIP valido para la carpeta de EPGs CALA.")
             return None
 
-    def _get_archive_content(self, url: str):
+    def _get_archive_content(self, _url: str):
         """Descarga el ZIP de Dropbox con reintentos y cache en memoria."""
         if self._archive_content is not None:
             return self._archive_content
 
-        download_url = self._build_download_url(url)
+        source_url = self._resolve_source_url()
+        if not source_url:
+            self.logger.logCritical("No se encontro enlace de EPGs CALA en correo.")
+            return None
+
+        download_url = self._build_download_url(source_url)
 
         for attempt in range(1, self.maxRetries + 1):
             try:
@@ -83,6 +100,116 @@ class CalaDropboxFetcher(IDataFetcher):
                     time.sleep(attempt)
 
         return None
+
+    def _resolve_source_url(self) -> str | None:
+        """Obtiene el enlace mensual de EPGs desde correo."""
+        if self._email_url:
+            return self._email_url
+
+        email_url = self._find_epg_url_in_email()
+        if email_url:
+            self._email_url = email_url
+            return self._email_url
+
+        return None
+
+    def _find_epg_url_in_email(self) -> str | None:
+        if not self.host or not self.username or not self.password:
+            self.logger.logCritical(
+                "Faltan variables de entorno de correo: EMAIL_IMAP_HOST, EMAIL_USERNAME o EMAIL_PASSWORD."
+            )
+            return None
+
+        mail = None
+        try:
+            self.logger.logInfo("Buscando enlace CALA en correo...")
+            mail = imaplib.IMAP4_SSL(self.host)
+            mail.login(self.username, self.password)
+            mail.select("inbox")
+
+            result, data = mail.search(None, f'(SUBJECT "{self.subject_filter}")')
+            if result != "OK" or not data or not data[0]:
+                self.logger.logCritical(f"No se encontraron correos con asunto '{self.subject_filter}'.")
+                return None
+
+            mail_ids = sorted(set(data[0].split()), key=lambda value: int(value))
+            for email_id in reversed(mail_ids):
+                result, msg_data = mail.fetch(email_id, "(RFC822)")
+                if result != "OK" or not msg_data:
+                    continue
+
+                raw_email = msg_data[0][1]
+                msg = email.message_from_bytes(raw_email)
+                decoded_subject = self._decode_header_value(msg.get("Subject", ""))
+                if self.subject_filter.lower() not in decoded_subject.lower():
+                    continue
+
+                epg_url = self._extract_epg_url_from_message(msg)
+                if epg_url:
+                    self.logger.logInfo(f"Enlace EPGs CALA encontrado en correo: {epg_url}")
+                    return epg_url
+        except (imaplib.IMAP4.error, OSError, socket.gaierror) as mail_error:
+            self.logger.logError(f"Error conectando al correo '{self.host}': {mail_error}")
+            return None
+        finally:
+            if mail is not None:
+                try:
+                    mail.logout()
+                except (imaplib.IMAP4.error, OSError):
+                    pass
+
+        self.logger.logCritical("No se encontro enlace de EPGs CALA en los correos.")
+        return None
+
+    def _extract_epg_url_from_message(self, msg) -> str | None:
+        body = "\n".join(self._iter_text_parts(msg))
+        if not body:
+            return None
+
+        body = unescape(body)
+        urls = [
+            url.rstrip(").,;")
+            for url in re.findall(r"https?://[^\s<>\"']+", body)
+        ]
+        dropbox_urls = [url for url in urls if "dropbox.com" in url.lower()]
+
+        for url in dropbox_urls:
+            if "/epgs" in urlsplit(url).path.lower():
+                return url
+
+        return dropbox_urls[0] if dropbox_urls else None
+
+    def _iter_text_parts(self, msg):
+        parts = msg.walk() if msg.is_multipart() else [msg]
+
+        for part in parts:
+            if part.get_content_maintype() == "multipart":
+                continue
+            if part.get("Content-Disposition"):
+                continue
+            if part.get_content_type() not in {"text/plain", "text/html"}:
+                continue
+
+            payload = part.get_payload(decode=True)
+            if payload is None:
+                payload = part.get_payload()
+                if isinstance(payload, str):
+                    yield payload
+                continue
+
+            yield payload.decode(part.get_content_charset() or "utf-8", errors="replace")
+
+    def _decode_header_value(self, value: str) -> str:
+        decoded_parts = decode_header(value)
+        decoded_value = ""
+
+        for part, encoding in decoded_parts:
+            if isinstance(part, bytes):
+                decoded_value += part.decode(encoding or "utf-8", errors="replace")
+            else:
+                decoded_value += part
+
+        return decoded_value
 
     @contextmanager
     def _dropbox_dns_fallback(self):

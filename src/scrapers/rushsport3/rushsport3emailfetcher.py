@@ -7,7 +7,7 @@ class RushSport3EmailFetcher:
         self.fetcher = EmailAttachmentDataFetcher(
             logger=logger,
             subject_filter="EPG Schedule RushSports3",
-            subject_filters=["RushSports3","EPG Schedule RushSports3", "RS3"],
+            subject_filters=["RushSports3","EPG Schedule RushSports3", "RS3","Updated EPG Sheet"],
             file_extension=".xlsx",
             filename_pattern="rs3 epg*.xlsx",
             parser=parseRushSport3Xlsx,
